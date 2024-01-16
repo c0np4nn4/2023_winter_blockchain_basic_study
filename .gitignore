@@ -1,0 +1,8 @@
+# python venv
+bc/
+
+# python cache
+__pycache__/
+
+# local ledger
+ledger.json
