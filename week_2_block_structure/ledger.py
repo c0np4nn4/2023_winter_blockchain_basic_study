@@ -45,3 +45,4 @@ def get_latest_block():
 
 # TODO
 # def get_block(index: int):
+    #write
