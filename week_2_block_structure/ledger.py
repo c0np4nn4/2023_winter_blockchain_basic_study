@@ -27,11 +27,6 @@ def ledger_append(block: Block):
     ledger_data.append(convert_to_dict(block))
     ledger.close()
 
-    # TODO
-    # Check the validity of `block`
-    # Hint: `block.py` has `validate_block()` function
-    # if something wrong in block it will make assert
-
     with open(LEDGER_PATH, "w") as ledger:
         json.dump(ledger_data, ledger, indent=2)
     ledger.close()
