@@ -1,6 +1,6 @@
 import os
 import json
-from block import Block, gen_genesis_block, convert_to_dict
+from block import Block, gen_genesis_block, convert_to_dict, validate_block
 from dataclasses import asdict
 
 LEDGER_PATH = "./ledger.json"
@@ -22,18 +22,19 @@ def ledger_append(block: Block):
     ledger_data = []
     with open(LEDGER_PATH, "r") as ledger:
         ledger_data = json.load(ledger)
+
+    validate_block(block)
     ledger_data.append(convert_to_dict(block))
     ledger.close()
 
     # TODO
     # Check the validity of `block`
     # Hint: `block.py` has `validate_block()` function
-    # ...
+    # if something wrong in block it will make assert
 
     with open(LEDGER_PATH, "w") as ledger:
         json.dump(ledger_data, ledger, indent=2)
     ledger.close()
-
 
 def get_latest_block():
     ledger_data = []
@@ -44,5 +45,9 @@ def get_latest_block():
 
 
 # TODO
-# def get_block(index: int):
-    #write
+def get_block(index: int):
+    ledger_data = []
+    with open(LEDGER_PATH, "r") as ledger:
+        ledger_data = json.load(ledger)
+    ledger.close()
+    return ledger_data[index]

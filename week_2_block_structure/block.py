@@ -1,5 +1,4 @@
 from dataclasses import dataclass, asdict
-from typing import assert_type
 from hashlib import sha256
 from pymerkle import InmemoryTree as MerkleTree
 from time import time_ns
@@ -75,12 +74,12 @@ def gen_block(header: BlockHeader, data: BlockData) -> Block:
 
 def validate_block(block: Block):
     # type checking
-    assert_type(block.Header.version, str)
-    assert_type(block.Header.timestamp, str)
-    assert_type(block.Header.index, int)
-    assert_type(block.Header.previous_hash, str)
-    assert_type(block.Header.merkle_hash, str)
-    assert_type(block.Data.msg, str)
+    assert type(block.Header.version) is str
+    assert type(block.Header.timestamp) is str
+    assert type(block.Header.index) is int
+    assert type(block.Header.previous_hash) is str
+    assert type(block.Header.merkle_hash) is str
+    assert type(block.Data.msg) is str
 
 
 def gen_block_hash(previous_block_header: BlockHeader):

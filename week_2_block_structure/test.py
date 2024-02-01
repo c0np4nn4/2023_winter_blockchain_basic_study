@@ -13,6 +13,7 @@ from ledger import (
     ledger_append,
     get_latest_block,
     LEDGER_PATH,
+    get_block
 )
 from dacite import from_dict
 import os
@@ -23,6 +24,8 @@ if not os.path.exists(LEDGER_PATH):
 
 else:
     latest_block = get_latest_block()
+    block_1 = get_block(1)
+    print(block_1)
     latest_block_header = latest_block["Header"]
     latest_block_data = latest_block["Data"]
 
