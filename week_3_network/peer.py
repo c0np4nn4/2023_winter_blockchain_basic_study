@@ -1,10 +1,13 @@
 from flask import Flask
 import sys
 import os
+# modify path
+sys.path.append('../week_2_block_structure')
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'week_2_block_structure')))
 # from block import block
-from get_block import ledger.py
+from ledger import get_block as gb
+from ledger import get_latest_block, ledger_append
+from block import gen_block_header, gen_block_data, gen_block
 
 app = Flask(__name__)
 
@@ -22,15 +25,14 @@ def get_last_block() -> str:
 
 # TODO
 # ledger.py 에 있는 함수들 호출할 수 있도록 하기
-### [!] get_block
-### [ ] get_latest_block
-### [ ] ledger_append
-
+# get_block() as gb
+# get_latest_block()
+# ledger_append()
 # TODO
 # block.py 에 있는 함수 중
-### [ ] gen_block_header
-### [ ] gen_block_data
-### [ ] gen_block
+# gen_block_header()
+# gen_block_data()
+# gen_block()
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -3,7 +3,8 @@ import json
 from block import Block, gen_genesis_block, convert_to_dict, validate_block
 from dataclasses import asdict
 
-LEDGER_PATH = "./ledger.json"
+#use absolute path -> use ledger in other .py
+LEDGER_PATH = "/home/priaselay/2023_winter_blockchain_basic_study/week_2_block_structure/ledger.json"
 
 
 def ledger_init():
