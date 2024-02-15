@@ -24,8 +24,6 @@ if not os.path.exists(LEDGER_PATH):
 
 else:
     latest_block = get_latest_block()
-    block_1 = get_block(1)
-    print(block_1)
     latest_block_header = latest_block["Header"]
     latest_block_data = latest_block["Data"]
 
@@ -41,11 +39,25 @@ else:
         from_dict(data_class=BlockHeader, data=latest_block_header)
     )
     merkle_hash = gen_merkle_root(msg.encode()).hex()
-    block_header = gen_block_header(
-        version, timestamp, index, previous_hash, merkle_hash
-    )
-    block_data = gen_block_data(msg)
-    block = gen_block(block_header, block_data)
+
+    # TODO: `pow.py`
+    
+    nonce = 0
+    while True:    
+        block_header = gen_block_header(
+            version, timestamp, index, previous_hash, merkle_hash, nonce
+        )
+        block_data = gen_block_data(msg)
+        block = gen_block(block_header, block_data)
+
+        hash = gen_block_hash(block.Header)
+        print(nonce, hash)
+
+        if hash.startswith('00'):
+            print("find!")
+            break
+        
+        nonce += 1
 
     # append ledger
     ledger_append(block)

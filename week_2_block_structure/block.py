@@ -11,6 +11,7 @@ class BlockHeader:
     index: int
     previous_hash: str
     merkle_hash: str
+    nonce: int
 
 
 @dataclass
@@ -39,14 +40,21 @@ def gen_genesis_block():
     previous_hash = "0" * 64
     merkle_hash = gen_merkle_root(msg.encode()).hex()
 
-    # header
-    block_header = gen_block_header(
-        version, timestamp, index, previous_hash, merkle_hash
-    )
+    nonce = 0
+    while True:
+        block_header = gen_block_header(
+            version, timestamp, index, previous_hash, merkle_hash, nonce
+        )
 
-    # data
-    block_data = gen_block_data(msg)
-    block = gen_block(block_header, block_data)
+        # data
+        block_data = gen_block_data(msg)
+        block = gen_block(block_header, block_data)
+
+        hash = gen_block_hash(block.Header)
+        if hash.startswith('00'):
+            break
+
+        nonce += 1
 
     return block
 
@@ -57,9 +65,10 @@ def gen_block_header(
     index: int,
     previous_hash: str,
     merkle_hash: str,
+    nonce: int,
 ):
     return BlockHeader(
-        version, timestamp, index, previous_hash, merkle_hash
+        version, timestamp, index, previous_hash, merkle_hash, nonce
     )
 
 
@@ -79,6 +88,7 @@ def validate_block(block: Block):
     assert type(block.Header.index) is int
     assert type(block.Header.previous_hash) is str
     assert type(block.Header.merkle_hash) is str
+    assert type(block.Header.nonce) is int
     assert type(block.Data.msg) is str
 
 
@@ -89,6 +99,7 @@ def gen_block_hash(previous_block_header: BlockHeader):
     header_data += str(previous_block_header.index)
     header_data += str(previous_block_header.previous_hash)
     header_data += str(previous_block_header.merkle_hash)
+    header_data += str(previous_block_header.nonce)
     return sha256(header_data.encode()).digest().hex()
 
 

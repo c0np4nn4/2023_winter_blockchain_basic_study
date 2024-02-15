@@ -1,6 +1,7 @@
 from flask import Flask
 import sys
 import os
+
 # modify path
 sys.path.append('../week_2_block_structure')
 
@@ -13,6 +14,7 @@ app = Flask(__name__)
 
 @app.route('/get_block/<block_number>')
 def get_block(block_number) -> str:
+    print(gb(1))
     return f"Hello! This is Flask for /get_block route. blocknumeber: {block_number}"
 
 @app.route('/ledger_append')
